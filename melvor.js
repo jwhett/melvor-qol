@@ -1,13 +1,12 @@
 class MelvorDriver {
     // Helpers
-    lootTracker = 0
-    foodTracker = 0
+    lootTracker;
+    foodTracker;
     isAutoLooting = false
     isTrackingFood = false
     getFoodCount = () => equippedFood[currentCombatFood].qty
     logger = (s) => {
-        const now = new Date()
-        console.log(`[${now}] - ${s}`)
+        console.log(`[${new Date()}] - ${s}`)
     }
     // F(x)
     startLooting = (t) => {
