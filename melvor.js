@@ -1,7 +1,16 @@
+class MyFood {
+    id
+    name
+    bankLocation
+    BANKID = 0
+    MAX = 6969696969
+}
+
 class MelvorDriver {
     // Helpers
-    lootTracker;
-    foodTracker;
+    lootTracker
+    foodTracker
+    foodList = []
     isAutoLooting = false
     isTrackingFood = false
     getFoodCount = () => equippedFood[currentCombatFood].qty
@@ -45,7 +54,7 @@ class MelvorDriver {
         // Start monitoring food every t ms.
         this.isTrackingFood = true
         this.foodTracker = setInterval(() => {
-            if (getFoodCount() <= 10) {
+            if (this.getFoodCount() <= 10) {
                 if (currentCombatFood === 2) { // we're completely out of food; exposed by Melvor.
                     stopCombat(false, true, true) // death, stopDungeon, runAway
                     alert("Out of food! Combat ended.")
@@ -55,6 +64,8 @@ class MelvorDriver {
                 } else {
                     selectEquippedFood(currentCombatFood+1) // select my next slot of food.
                     this.logger("Swapped food!")
+                    // TODO: Add something about adding any bank food.
+                    // equipFood(f.BANKID, f.id, f.MAX)
                 }
             }
         }, t)
@@ -70,6 +81,19 @@ class MelvorDriver {
         }
     }
     status = () => {
-        console.log(`Auto-looting: ${this.isAutoLooting}, Food tracking: ${this.isTrackingFood}`)
+        console.log(`Auto-looting: ${this.isAutoLooting}, Food tracking: ${this.isTrackingFood}, Bank has ${this.foodList.length} eligible food items.`)
+    }
+    findFood = () => {
+        for (i = 0; i < bank.length; i++) {
+            thisItem = items[bank[i].id]
+            // build a list of food in my bank
+            if (thisItem.canEat) {
+                f = new MyFood()
+                f.id = thisItem.id
+                f.name = thisItem.name
+                f.bankLocation = i
+                this.foodList.push(f)
+            }
+        }
     }
 }
