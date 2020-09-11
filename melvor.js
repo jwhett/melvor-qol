@@ -103,6 +103,10 @@ class MelvorDriver {
             this.logger("Nothing to do: not tracking food.")
         }
     }
+    stopAll = () => {
+        this.stopWatchingFood()
+        this.stopLooting()
+    }
     status = () => {
         console.log(`Auto-looting: ${this.isAutoLooting}, Food tracking: ${this.isTrackingFood}, Bank has ${this.foodList.length} eligible food items.`)
     }
