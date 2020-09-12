@@ -45,10 +45,10 @@ class MelvorDriver {
     }
     findFood = () => {
         for (i = 0; i < bank.length; i++) {
-            thisItem = items[bank[i].id]
+            var thisItem = items[bank[i].id]
             // build a list of food in my bank
             if (thisItem.canEat) {
-                f = new MyFood()
+                var f = new MyFood()
                 f.id = thisItem.id
                 f.name = thisItem.name
                 f.bankLocation = i
