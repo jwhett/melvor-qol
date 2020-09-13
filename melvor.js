@@ -1,4 +1,4 @@
-class MyFood {
+function MyFood () {
     id
     name
     bankLocation
@@ -6,7 +6,7 @@ class MyFood {
     MAX = 6969696969
 }
 
-class MelvorDriver {
+function MelvorDriver () {
     // Helpers
     lootTracker
     foodTracker
