@@ -72,7 +72,7 @@ class MelvorDriver {
             if (this.getFoodCount() > 0) return // we have equipped food to eat
             if (this.isOutOfFood() && this.foodList.length === 0) { // completely out of food
                 stopCombat(false, true, true) // death, stopDungeon, runAway
-                alert("Out of food! Combat ended.")
+                notifyPlayer(CONSTANTS.skill.Attack, "Out of food! Combat ended.")
                 this.logger("Stopped combat due to lack of food.")
                 this.isTrackingFood = false
                 clearInterval(this.foodTracker)
