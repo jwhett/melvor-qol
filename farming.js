@@ -17,18 +17,25 @@ function patchIsReady(p) {
 }
 function getNextSeedIDByTier(seeds, t) {
     let seedFound
-  for (s of seeds){
+    for (s of seeds){
         try {
             if (s.seed.tier.toLowerCase() === t.toLowerCase().substring(0, t.length-1)) {
-                if (s.realID === undefined) throw "s.realID is undefined..."
                 seedFound = s.realID
             }
         } catch (err) {
             console.error(`getNextSeedIDByTier() error: ${err}`);
         }
-        if (seedFound !== undefined) break
-  }
-  return seedFound
+        if (seedFound !== undefined) {
+            if (checkBankForItem(seedFound)) {
+                console.log(`{inBank: true, seedFound: ${seedFound}}`);
+                break
+            } else {
+                console.log(`{inBank: false, seedFound: ${seedFound}}`);
+                continue
+            }
+        }
+    }
+    return seedFound
 }
 function reapAndSow() {
     console.log("> Reaping...")
