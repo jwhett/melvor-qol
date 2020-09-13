@@ -37,8 +37,8 @@ function reapAndSow() {
         for (let patchID=0; patchID < newFarmingAreas[locationID].patches.length; patchID++) {
             let patch = newFarmingAreas[locationID].patches[patchID]
             let areaName = newFarmingAreas[locationID].areaName
-            selectedPatch = [newFarmingAreas[locationID].id, patchID]
-            selectedSeed = 0
+            selectedPatch = [newFarmingAreas[locationID].id, patchID] // Melvor global
+            selectedSeed = 0 // Melvor global
 
             // can we plant?
             if (!patch.unlocked) continue
