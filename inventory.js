@@ -1,3 +1,13 @@
+function allOfTypeInItems(t) {
+    // Returns a list of items with type t
+    // that are NOT locked.
+    let things = []
+    for (let i=0; i < items.length; i++) {
+        if (items[i].type === t) things.push(items[i])
+    }
+    return things
+}
+
 function allOfTypeInBank(t) {
     // Returns a list of items with type t
     // that are NOT locked.
@@ -9,21 +19,16 @@ function allOfTypeInBank(t) {
     return things
 }
 
-function sellGems() {
-    let gems = allOfTypeInBank("Gem")
-    gems.forEach(gem => {sellItem(gem.id)})
+function sellAllOfType(t) {
+    let things = allOfTypeInBank(t)
+    things.forEach(thing => {
+        sellItem(thing.id)
+    })
 }
 
 function learnTokens() {
     let tokens = allOfTypeInBank("Token")
     tokens.forEach(token => {
         claimBankToken(0,token.id)
-    })
-}
-
-function sellHarvest() {
-    let crops = allOfTypeInBank("Havest") // not a typo...
-    crops.forEach(crop => {
-        sellItem(crop.id)
     })
 }
