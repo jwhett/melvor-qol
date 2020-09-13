@@ -19,7 +19,7 @@ class MelvorDriver {
         console.log(`[${new Date()}] - ${s}`)
     }
     // F(x)
-    startLooting = (t) => {
+    function startLooting (t) {
         // loot everything every t ms
         if (t == null) {
             this.logger("Usage: startLooting(t) where 't' is interval in ms.")
@@ -33,7 +33,7 @@ class MelvorDriver {
             this.logger("Auto-loot enabled!")
         }
     }
-    stopLooting = () => {
+    function stopLooting () {
         if (this.isAutoLooting) {
             clearInterval(this.lootTracker)
             this.lootTracker = 0
@@ -43,7 +43,7 @@ class MelvorDriver {
         }
         this.logger("Nothing to do: no auto-looter running.")
     }
-    findFood = () => {
+    function findFood () {
         for (i = 0; i < bank.length; i++) {
             var thisItem = items[bank[i].id]
             // build a list of food in my bank
@@ -56,7 +56,7 @@ class MelvorDriver {
             }
         }
     }
-    startWatchingFood = (t) => {
+    function startWatchingFood (t) {
         if (t == null) {
             this.logger("Usage: startWatchingFood(t) where 't' is interval in ms.")
             return
@@ -94,7 +94,7 @@ class MelvorDriver {
         }, t)
         this.logger("Started watching your food.")
     }
-    stopWatchingFood = () => {
+    function stopWatchingFood () {
         if (this.isTrackingFood) {
             clearInterval(this.foodTracker)
             this.isTrackingFood = false
@@ -103,11 +103,11 @@ class MelvorDriver {
             this.logger("Nothing to do: not tracking food.")
         }
     }
-    stopAll = () => {
+    function stopAll () {
         this.stopWatchingFood()
         this.stopLooting()
     }
-    status = () => {
+    function status () {
         this.logger(`Auto-looting: ${this.isAutoLooting}, Food tracking: ${this.isTrackingFood}, Bank has ${this.foodList.length} eligible food items.`)
     }
 }
