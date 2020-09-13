@@ -1,59 +1,80 @@
-function loadSeedBag() {
+function getSeeds() {
     var a = []
-    for (i = 0; i < bank.length; i++) {
-        if (bank[i].type !== "Seeds") continue
-        a.push(items[bank[i].id])
+    for (i = 0; i < items.length; i++) {
+        if (items[i].type !== "Seeds") continue
+        a.push({ realID: i, seed: items[i]})
     }
     return a
 }
-
-function getSeedID(seed) {
-    switch (seed.tier) {
-        case "Allotment":
-            return seed.id+1
-        case "Herb":
-            return seed.id+1
-        default:
-            return undefiend
-    }
+function patchHasGrown(p) {
+    return p.hasGrown && p.seedID !== 0
 }
-
-function getNextSeedIDByTier(t) {
-  loadSeedBag().forEach((seed) => {
-    if (seed.tier.toLowerCase() === t.toLowerCase.substring(0, t.length-1)) {
-      return getSeedID(s)
-    }
-  });
+function patchIsEmpty(p) {
+    return !p.hasGrown && p.seedID === 0
 }
-
-for (var x=0; x<newFarmingAreas.length; x++) {
-  for (var i=0; i<newFarmingAreas[x].patches.length; i++) {
-      var patch = newFarmingAreas[x].patches[i]
-      var selectedPatch = [newFarmingAreas[x].id,i]
-      selectedSeed = 0
-      if (!patch.unlocked) {
-        console.log("Patch locked.")
-        continue
-      }
-      if (!patch.hasGrown && patch.seedID !== 0) {
-        // occupied; not ready
-        console.log("Patch not ready.")
-        continue
-      }
-      if (!patch.hasGrown && patch.seedID === 0) {
-          // empty patch, need to pick a fresh seed
-          selectedSeed = getNextSeedIDByTier(newFarmingAreas[x].name)
-      } else {
-          // not empty
-          if (checkBankForItem(patch.seedID)) {
-              selectedSeed = patch.seedID
-          } else {
-              // don't have the same seed to plant
-              selectedSeed = getNextSeedIDByTier(newFarmingAreas[x].name)
-          }
-          harvestSeed(locationID, i)
-      }
-      plantSeed()
-      console.log(`Seed ${selectedSeed} planted`)
+function patchIsReady(p) {
+    return ((patchHasGrown(p)) || (patchIsEmpty(p)))
+}
+function getNextSeedIDByTier(seeds, t) {
+    let seedFound
+  for (s of seeds){
+        try {
+            if (s.seed.tier.toLowerCase() === t.toLowerCase().substring(0, t.length-1)) {
+                if (s.realID === undefined) throw "s.realID is undefined..."
+                seedFound = s.realID
+            }
+        } catch (err) {
+            console.error(`getNextSeedIDByTier() error: ${err}`);
+        }
+        if (seedFound !== undefined) break
   }
+  return seedFound
+}
+function reapAndSow() {
+    console.log("> Reaping...")
+    let realSeeds = getSeeds()
+    for (let locationID=0; locationID < newFarmingAreas.length; locationID++) {
+        console.log(`>> {locationID: ${locationID}, areaName: ${newFarmingAreas[locationID].areaName}}`)
+      for (let patchID=0; patchID < newFarmingAreas[locationID].patches.length; patchID++) {
+          console.log(`>>> {patchID: ${patchID}}`)
+          let patch = newFarmingAreas[locationID].patches[patchID]
+          let areaName = newFarmingAreas[locationID].areaName
+          selectedPatch = [newFarmingAreas[locationID].id, patchID]
+          selectedSeed = 0
+          console.log(`>>> {patch: ${patch}, selectedPatch: ${selectedPatch}, areaName: ${areaName}, selectedSeed: ${selectedSeed}}`)
+
+          // can we plant?
+          if (!patch.unlocked) {console.log(">>> not unlocked");continue}
+          if (!patchIsReady(patch)) {console.log(">>> not ready");continue}
+
+          // what seed do i plant?
+          if (patchIsEmpty(patch)) {
+              // no harvest in this block
+              selectedSeed = getNextSeedIDByTier(realSeeds, areaName)
+              console.log(`>>> empty, decided on this seed: {selectedSeed: ${selectedSeed}}`)
+          } else {
+              // try to plant the same seed
+              // we'll need to harvest before leaving block
+              if (checkBankForItem(patch.seedID)) {
+                  selectedSeed = patch.seedID
+                  console.log(`>>> not empty, decided on this seed: {selectedSeed: ${selectedSeed}}`)
+              } else {
+                  // don't have the same seed to plant
+                  selectedSeed = getNextSeedIDByTier(realSeeds, areaName)
+                  console.log(`>>> not empty & doin't have same, decided on this seed: {selectedSeed: ${selectedSeed}}`)
+              }
+              console.log(`>>> harvesting: {locationID: ${locationID}, patchID: ${patchID}}`)
+              harvestSeed(locationID, patchID)
+          }
+          console.log(`>>> planting: {selectedSeed: ${selectedSeed}, selectedPatch: ${selectedPatch}}`)
+          plantSeed()
+          if (patchIsEmpty(patch)) {
+              console.log(">>> planting FAILED <<<")
+          } else {
+              console.log(`>>> Seed ${selectedSeed} planted in ${areaName}`)
+          }
+      }
+      console.log(`>> done with: {locationID: ${locationID}, areaName: ${newFarmingAreas[locationID].areaName}`)
+    }
+    console.log("> done with all locations");
 }
