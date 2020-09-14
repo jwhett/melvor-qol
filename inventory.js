@@ -8,6 +8,14 @@ function allOfTypeInItems(t) {
     return things
 }
 
+function allCraftingItems() {
+    let things = []
+    for (let i=0; i < items.length; i++) {
+        if (items[i].craftingID !== undefined) things.push(items[i])
+    }
+    return things
+}
+
 function allOfTypeInBank(t) {
     // Returns a list of items with type t
     // that are NOT locked.
@@ -31,4 +39,22 @@ function learnTokens() {
     tokens.forEach(token => {
         claimBankToken(0,token.id)
     })
+}
+
+function haveMaterialsForCrafting(item) {
+    let required = []
+    let haveAllRequired
+    try {
+        item.craftReq.forEach(req => {
+            required.push(checkBankForItem(req.id))
+        })
+        if (required.some((thing) => thing === false)) {
+            haveAllRequired = false
+        } else {
+            haveAllRequired = true
+        }
+        return {haveAllRequired: haveAllRequired, forItem: item}
+    } catch (err) {
+        console.log("maybe you didn't give me an item...");
+    }
 }
