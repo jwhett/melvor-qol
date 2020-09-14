@@ -1,11 +1,6 @@
 // Helpers
 function getSeeds() {
-    var a = []
-    for (i = 0; i < items.length; i++) {
-        if (items[i].type !== "Seeds") continue
-        a.push({ realID: i, seed: items[i]})
-    }
-    return a
+    return items.filter(item => item.type === "Seeds")
 }
 function patchHasGrown(p) {
     return p.hasGrown && p.seedID !== 0
@@ -16,19 +11,21 @@ function patchIsEmpty(p) {
 function patchIsReady(p) {
     return ((patchHasGrown(p)) || (patchIsEmpty(p)))
 }
-function getNextSeedIDByTier(seeds, t) {
-    let seedFound
-    for (s of seeds){
-        try {
-            if (s.seed.tier.toLowerCase() === t.toLowerCase().substring(0, t.length-1)) {
-                seedFound = s.realID
-            }
-        } catch (err) {
-            console.error(`getNextSeedIDByTier() error: ${err}`);
+function getNextSeedIDByTier(t) {
+    let loc
+    let seedsOfTier = items.filter(item => item.tier === t)
+    for (var i=0; i<seedsOfTier.length; i++){
+        let seed = seedsOfTier[i]
+        let cname = seed.name.substring(0,seed.name.length-1).replaceAll(' ', '_')
+        if (CONSTANTS.item[cname] === undefined) {
+            // Carrot_Seeds: the only exception to this rule
+            loc = CONSTANTS.item[cname+"s"]
+        } else {
+            loc = CONSTANTS.item[cname]
         }
-        if (seedFound !== undefined && checkBankForItem(seedFound)) break
+        if (loc !== undefined && checkBankForItem(loc)) break
     }
-    return seedFound
+    return loc
 }
 // Main
 function reapAndSow() {
