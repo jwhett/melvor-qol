@@ -1,2 +1,7 @@
-var watchers=[];["Junk", "Gem", "Havest", "Logs"].forEach((t) => watchers.push(new Watcher(sellAllOfType, 120000, t)))
-var myMonitors={}; watchers.forEach(watcher => myMonitors[watcher.type] = watcher)
+var watchers={}
+for (t of ["Junk", "Gem", "Havest", "Logs"]) {
+    watchers[t] = new Watcher(sellAllOfType, 120000, t, t)
+}
+watchers.Farming = new Watcher(reapAndSow, 120000, "Farming")
+watchers.Food = new Watcher(foodTracker, 10000, "Food")
+watchers.Looting = new Watcher(lootAll, 30000, "Looting")

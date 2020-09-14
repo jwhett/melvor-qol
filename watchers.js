@@ -1,15 +1,16 @@
-function Watcher(fn, interval, type) {
+function Watcher(fn, interval, type, ...args) {
     this.fn = fn
     this.interval = interval
     this.type = type
+    this.args = args
 }
 
-Watcher.prototype.watch = function () {
-    this.intervalID = setInterval(this.fn, this.interval, this.type)
+Watcher.prototype.start = function () {
+    this.intervalID = setInterval(this.fn, this.interval, this.args)
     this.startTime = new Date().getTime()
 };
 
-Watcher.prototype.stopWatching = function () {
+Watcher.prototype.stop = function () {
     clearInterval(this.intervalID)
     this.intervalID = undefined
 };
