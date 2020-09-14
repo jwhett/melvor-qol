@@ -13,8 +13,9 @@ Watcher.prototype.start = function () {
 Watcher.prototype.stop = function () {
     clearInterval(this.intervalID)
     this.intervalID = undefined
+    console.log(`Ran for ${this.duration()} seconds`)
 };
 
 Watcher.prototype.duration = function () {
-    return Math.floor((new Date().getTime() - this.startTime)/1000) + " seconds"
+    return Math.floor((new Date().getTime() - this.startTime)/1000)
 };
