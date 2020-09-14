@@ -1,18 +1,18 @@
 function MyFood () {
-    id
-    name
-    bankLocation
-    BANKID = 0
-    MAX = 6969696969
+    let id
+    let name
+    let bankLocation
+    let BANKID = 0
+    let MAX = 6969696969
 }
 
 function MelvorDriver () {
     // Helpers
-    lootTracker
-    foodTracker
-    foodList = []
-    isAutoLooting = false
-    isTrackingFood = false
+    let lootTracker = 0
+    let foodTracker = 0
+    let foodList = []
+    let isAutoLooting = false
+    let isTrackingFood = false
 }
 
 MelvorDriver.prototype.isOutOfFood = () => equippedFood[0].itemID === equippedFood[1].itemID && equippedFood[0].itemID === equippedFood[2].itemID
@@ -107,5 +107,9 @@ MelvorDriver.prototype.stopAll = function () {
     this.stopLooting()
 }
 MelvorDriver.prototype.status = function () {
-    this.logger(`Auto-looting: ${this.isAutoLooting}, Food tracking: ${this.isTrackingFood}, Bank has ${this.foodList.length} eligible food items.`)
+    try {
+        this.logger(`Auto-looting: ${this.isAutoLooting}, Food tracking: ${this.isTrackingFood}, Bank has ${this.foodList.length} eligible food items.`)
+    } catch (err) {
+        this.logger(`Auto-looting: ${this.isAutoLooting}, Food tracking: ${this.isTrackingFood}, Bank has no eligible food items.`)
+    }
 }
