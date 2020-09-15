@@ -25,14 +25,7 @@ function allCraftingItems() {
 }
 
 function allOfTypeInBank(t) {
-    // Returns a list of items with type t
-    // that are NOT locked.
-    let things = []
-    for (let i=0; i < bank.length; i++) {
-        if (bank[i].locked) continue
-        if (bank[i].type === t) things.push(bank[i])
-    }
-    return things
+    return bank.filter(i => (i.type === t && !i.locked)
 }
 
 function sellAllOfType(t) {
