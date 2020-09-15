@@ -15,7 +15,7 @@ function allCraftingItems() {
 }
 
 function allOfTypeInBank(t) {
-    return bank.filter(i => (i.type === t && !i.locked)
+    return bank.filter(i => (i.type === t && !i.locked))
 }
 
 function sellAllOfType(t) {
