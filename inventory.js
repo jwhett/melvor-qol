@@ -82,6 +82,7 @@ function foodTracker() {
         } catch (err) {
             console.log(`${new Date()} - Couldn't swap to next equipped food.`)
         }
+        if (foodList === undefined) return // we don't have food in bank
         f = foodList.pop()
         equipFood(f.BANKID, f.id, f.MAX)
     }
