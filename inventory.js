@@ -7,13 +7,7 @@ function MyFood (id, name, bankLocation) {
 }
 
 function allOfTypeInItems(t) {
-    // Returns a list of items with type t
-    // that are NOT locked.
-    let things = []
-    for (let i=0; i < items.length; i++) {
-        if (items[i].type === t) things.push(items[i])
-    }
-    return things
+    return items.filter(i => i.type === t)
 }
 
 function allCraftingItems() {
