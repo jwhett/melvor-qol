@@ -6,11 +6,13 @@ function Watcher(fn, interval, type, ...args) {
 }
 
 Watcher.prototype.start = function () {
+    if (this.intervalID !== undefined) return
     this.intervalID = setInterval(this.fn, this.interval, ...this.args)
     this.startTime = new Date().getTime()
 };
 
 Watcher.prototype.stop = function () {
+    if (this.intervalID === undefined) return
     clearInterval(this.intervalID)
     this.intervalID = undefined
     console.log(`Ran for ${this.duration()} seconds`)
