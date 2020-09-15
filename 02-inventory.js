@@ -81,7 +81,6 @@ function equipNextFood() {
     for (var i=0; i<equippedFood.length; i++) {
         try {
             if (equippedFood[i].qty > 0) {
-                console.log(`Slot ${i} has food! Equipping...`);
                 selectEquippedFood(i)
                 return true
             }
