@@ -1,7 +1,7 @@
-function MyFood (id, name, bankLocation) {
+function MyFood (id, name, qty) {
      this.id = id
      this.name = name
-     this.bankLocation = bankLocation
+     this.qty = qty
      this.MAX = 6969696969
 }
 
@@ -63,43 +63,52 @@ function haveMaterialsForCrafting(item) {
 }
 
 function findFood() {
-    let foodList
+    let foodList = []
     let allFoodItems = allOfTypeInBank("Food")
-    allFoodItems.forEach((food, location) => {
-        foodList.push(new MyFood(food.id, food.name, location))
+    allFoodItems.forEach(food => {
+        foodList.push(new MyFood(food.id, food.name, food.qty))
     });
     return foodList
 }
 
 function isOutOfEquippedFood() {
-    equippedFood[0].itemID === equippedFood[1].itemID && equippedFood[0].itemID === equippedFood[2].itemID
+    return equippedFood[0].itemID === equippedFood[1].itemID && equippedFood[0].itemID === equippedFood[2].itemID
 }
 
-function getEquippedFoodCount() { equippedFood[currentCombatFood].qty }
+function getEquippedFoodCount() { return equippedFood[currentCombatFood].qty }
 
-function nextEquippedFood() {
-    for (var i=0; i++; i < equippedFood.length) {
-        if (equippedFood[i].qty > 0) {
-            selectEquippedFood(equippedFood[i])
-            return
+function equipNextFood() {
+    for (var i=0; i<equippedFood.length; i++) {
+        try {
+            if (equippedFood[i].qty > 0) {
+                console.log(`Slot ${i} has food! Equipping...`);
+                selectEquippedFood(i)
+                break
+            } else {
+                console.log(`Slot ${i} didn't have food... Next!`);
+            }
+        } catch (err) {
+            console.log(`oops! we hit an error: ${err}`);
         }
     }
 }
 
 function foodTracker() {
     if (!isInCombat) return // we're not in combat, don't need to watch food
-    let foodList = findFood()
     if (getEquippedFoodCount() > 0) return // we have equipped food to eat
+    let foodList = findFood()
     if (isOutOfEquippedFood() && foodList.length === 0) { // completely out of food
         stopCombat(false, true, true) // death, stopDungeon, runAway
     } else { // we have food in pocket, but need to equip it
         try {
-            nextEquippedFood()
+            equipNextFood()
         } catch (err) {
             console.log(`${new Date()} - Couldn't swap to next equipped food.`)
         }
         if (foodList === undefined) return // we don't have food in bank
-        f = foodList.pop()
-        equipFood(currentBank, f.id, f.MAX)
+        console.log("foodList before pop: "+foodList.length);
+        let f = foodList.pop()
+        console.log(`equipping: ${f.qty} of ${f.name}`);
+        equipFood(currentBank, f.id, f.qty)
     }
 }
