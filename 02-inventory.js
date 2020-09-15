@@ -2,7 +2,7 @@ function MyFood (id, name, bankLocation) {
      this.id = id
      this.name = name
      this.bankLocation = bankLocation
-     this.BANKID = 0
+     this.BANKID = currentBank
      this.MAX = 6969696969
 }
 
@@ -28,7 +28,7 @@ function sellAllOfType(t) {
 function learnTokens() {
     let tokens = allOfTypeInBank("Token")
     tokens.forEach(token => {
-        claimBankToken(0,token.id)
+        claimBankToken(currentBank,token.id)
     })
 }
 
