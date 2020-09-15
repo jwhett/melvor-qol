@@ -83,14 +83,13 @@ function equipNextFood() {
             if (equippedFood[i].qty > 0) {
                 console.log(`Slot ${i} has food! Equipping...`);
                 selectEquippedFood(i)
-                break
-            } else {
-                console.log(`Slot ${i} didn't have food... Next!`);
+                return true
             }
         } catch (err) {
-            console.log(`oops! we hit an error: ${err}`);
+            console.log(`oops! we hit an error equipping next food: ${err}`);
         }
     }
+    return false
 }
 
 function foodTracker() {
@@ -99,16 +98,10 @@ function foodTracker() {
     let foodList = findFood()
     if (isOutOfEquippedFood() && foodList.length === 0) { // completely out of food
         stopCombat(false, true, true) // death, stopDungeon, runAway
-    } else { // we have food in pocket, but need to equip it
-        try {
-            equipNextFood()
-        } catch (err) {
-            console.log(`${new Date()} - Couldn't swap to next equipped food.`)
-        }
-        if (foodList === undefined) return // we don't have food in bank
-        console.log("foodList before pop: "+foodList.length);
+    } else if (equipNextFood()) { // we have food in pocket, but need to equip it
+        return // We successfully swapped to equipped food
+    } else {
         let f = foodList.pop()
-        console.log(`equipping: ${f.qty} of ${f.name}`);
         equipFood(currentBank, f.id, f.qty)
     }
 }
