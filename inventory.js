@@ -11,11 +11,7 @@ function allOfTypeInItems(t) {
 }
 
 function allCraftingItems() {
-    let things = []
-    for (let i=0; i < items.length; i++) {
-        if (items[i].craftingID !== undefined) things.push(items[i])
-    }
-    return things
+    return items.filter(i => items[i].craftingID !== undefined)
 }
 
 function allOfTypeInBank(t) {
