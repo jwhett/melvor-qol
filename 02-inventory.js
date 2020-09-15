@@ -25,6 +25,13 @@ function sellAllOfType(t) {
     })
 }
 
+function sellAllOfNameSubstring(s) {
+    let things = bank.filter(i => i.name.includes(s))
+    things.forEach(thing => {
+        sellItem(thing.id)
+    })
+}
+
 function learnTokens() {
     let tokens = allOfTypeInBank("Token")
     tokens.forEach(token => {
