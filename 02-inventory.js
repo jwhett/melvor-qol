@@ -2,7 +2,6 @@ function MyFood (id, name, bankLocation) {
      this.id = id
      this.name = name
      this.bankLocation = bankLocation
-     this.BANKID = currentBank
      this.MAX = 6969696969
 }
 
@@ -37,6 +36,16 @@ function learnTokens() {
     tokens.forEach(token => {
         claimBankToken(currentBank,token.id)
     })
+}
+
+function buryBones() {
+    let bones = allOfTypeInBank("Bones")
+    bones.forEach(bone => {
+        if (bone.qty >= 10) {
+            cname = bone.name.replaceAll(' ', '_')
+            buryItem(currentBank, CONSTANTS.item[cname], 6969696969)
+        }
+    });
 }
 
 function haveMaterialsForCrafting(item) {
@@ -91,6 +100,6 @@ function foodTracker() {
         }
         if (foodList === undefined) return // we don't have food in bank
         f = foodList.pop()
-        equipFood(f.BANKID, f.id, f.MAX)
+        equipFood(currentBank, f.id, f.MAX)
     }
 }
