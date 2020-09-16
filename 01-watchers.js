@@ -19,5 +19,10 @@ Watcher.prototype.stop = function () {
 };
 
 Watcher.prototype.duration = function () {
-    return Math.floor((new Date().getTime() - this.startTime)/1000)
+    let d = Math.floor((new Date().getTime() - this.startTime)/1000)
+    if (isNaN(d)) {
+        return 0
+    } else {
+        return d
+    }
 };
