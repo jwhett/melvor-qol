@@ -17,6 +17,10 @@ watchers.Feathers = new Watcher(sellAllOfNameSubstring, 5000, "Feathers", "Feath
 function showWatchers() {
     console.log(`Status as of ${new Date()}:`)
     for (w in watchers) {
-        console.log(` => ${watchers[w].type} running for ${watchers[w].duration()} seconds.`)
+        if (watchers[w].duration() > 0) {
+            console.log(` => [ RUNNING ] ${watchers[w].type} running for ${watchers[w].duration()} seconds.`)
+        } else {
+            console.log(` => [ OFFLINE ] ${watchers[w].type} is not running`)
+        }
     }
 }
