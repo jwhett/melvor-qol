@@ -116,6 +116,7 @@ function foodTracker() {
     if (isOutOfEquippedFood() && foodList.length === 0) { // completely out of food
         try {
             stopCombat(false, true, true) // death, stopDungeon, runAway
+            console.log(`Dropped out of combat due to lack of food at ${new Date()}`);
         } catch(err) {
             console.error(`oops! hit an error when stopping combat: ${err}`);
         }

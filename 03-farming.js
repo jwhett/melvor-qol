@@ -29,7 +29,6 @@ function getNextSeedIDByTier(t) {
 }
 // Main
 function reapAndSow() {
-    let realSeeds = getSeeds()
     for (let locationID=0; locationID < newFarmingAreas.length; locationID++) {
         for (let patchID=0; patchID < newFarmingAreas[locationID].patches.length; patchID++) {
             let patch = newFarmingAreas[locationID].patches[patchID]
@@ -44,7 +43,7 @@ function reapAndSow() {
             // what seed do i plant?
             if (patchIsEmpty(patch)) {
             // no harvest in this block
-                selectedSeed = getNextSeedIDByTier(realSeeds, areaName)
+                selectedSeed = getNextSeedIDByTier(areaName)
             } else {
                 // try to plant the same seed
                 // we'll need to harvest before leaving block
@@ -52,7 +51,7 @@ function reapAndSow() {
                     selectedSeed = patch.seedID
                 } else {
                   // don't have the same seed to plant
-                  selectedSeed = getNextSeedIDByTier(realSeeds, areaName)
+                  selectedSeed = getNextSeedIDByTier(areaName)
                 }
                 try {
                     harvestSeed(locationID, patchID)
