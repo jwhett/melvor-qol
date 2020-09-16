@@ -15,7 +15,7 @@ Watcher.prototype.stop = function () {
     if (this.intervalID == null) return // either null or undefined
     clearInterval(this.intervalID)
     this.intervalID = null
-           `Ran for ${this.duration()} seconds`)
+    console.log(`Ran for ${this.duration()} seconds`)
 };
 
 Watcher.prototype.restart = function () {
