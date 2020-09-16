@@ -15,7 +15,12 @@ Watcher.prototype.stop = function () {
     if (this.intervalID === undefined) return
     clearInterval(this.intervalID)
     this.intervalID = undefined
-    console.log(`Ran for ${this.duration()} seconds`)
+           `Ran for ${this.duration()} seconds`)
+};
+
+Watcher.prototype.restart = function () {
+    this.stop()
+    this.start()
 };
 
 Watcher.prototype.duration = function () {
