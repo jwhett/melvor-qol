@@ -54,9 +54,17 @@ function reapAndSow() {
                   // don't have the same seed to plant
                   selectedSeed = getNextSeedIDByTier(realSeeds, areaName)
                 }
-                harvestSeed(locationID, patchID)
+                try {
+                    harvestSeed(locationID, patchID)
+                } catch (err) {
+                    console.error(`oops! hit an issue harvesting: ${err}`);
+                }
             }
-            plantSeed()
+            try {
+                plantSeed()
+            } catch (err) {
+                console.error(`oops! hit an issue planting seeds: ${err}`);
+            }
         }
     }
 }

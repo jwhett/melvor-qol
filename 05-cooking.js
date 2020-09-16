@@ -3,6 +3,6 @@ function fireWatcher() {
     try {
         lightCookingFire()
     } catch (err) {
-        console.log("oops! couldn't start a cooking fire: "+err);
+        console.error("oops! couldn't start a cooking fire: "+err);
     }
 }

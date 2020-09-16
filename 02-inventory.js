@@ -20,21 +20,35 @@ function allOfTypeInBank(t) {
 function sellAllOfType(t) {
     let things = allOfTypeInBank(t)
     things.forEach(thing => {
-        sellItem(thing.id)
+        try {
+            sellItem(thing.id)
+        } catch (err) {
+            console.error(`oops! hit an error when selling an item: ${err}`);
+        }
     })
 }
 
 function sellAllOfNameSubstring(s) {
     let things = bank.filter(i => i.name.includes(s))
     things.forEach(thing => {
-        sellItem(thing.id)
+        try {
+            sellItem(thing.id)
+        } catch (err) {
+            console.error(`oops! hit an error when selling an item: ${err}`);
+        }
     })
 }
 
 function learnTokens() {
     let tokens = allOfTypeInBank("Token")
     tokens.forEach(token => {
-        claimBankToken(currentBank,token.id)
+        for (let i=0; i<token.qty; i++) {
+            try {
+                claimBankToken(currentBank,token.id)
+            } catch (err) {
+                console.error(`oops! hit an error when learning a token: ${err}`);
+            }
+        }
     })
 }
 
@@ -43,7 +57,11 @@ function buryBones() {
     bones.forEach(bone => {
         if (bone.qty >= 10) {
             cname = bone.name.replaceAll(' ', '_')
-            buryItem(currentBank, CONSTANTS.item[cname], 6969696969)
+            try {
+                buryItem(currentBank, CONSTANTS.item[cname], 6969696969)
+            } catch (err) {
+                console.error(`oops! hit an error when burying bones: ${err}`);
+            }
         }
     });
 }
@@ -85,7 +103,7 @@ function equipNextFood() {
                 return true
             }
         } catch (err) {
-            console.log(`oops! we hit an error equipping next food: ${err}`);
+            console.error(`oops! we hit an error equipping next food: ${err}`);
         }
     }
     return false
@@ -96,11 +114,19 @@ function foodTracker() {
     if (getEquippedFoodCount() > 0) return // we have equipped food to eat
     let foodList = findFood()
     if (isOutOfEquippedFood() && foodList.length === 0) { // completely out of food
-        stopCombat(false, true, true) // death, stopDungeon, runAway
+        try {
+            stopCombat(false, true, true) // death, stopDungeon, runAway
+        } catch(err) {
+            console.error(`oops! hit an error when stopping combat: ${err}`);
+        }
     } else if (equipNextFood()) { // we have food in pocket, but need to equip it
         return // We successfully swapped to equipped food
     } else {
         let f = foodList.pop()
-        equipFood(currentBank, f.id, f.qty)
+        try {
+            equipFood(currentBank, f.id, f.qty)
+        } catch(err) {
+            console.error(`oops! hit an error when equipping food from bank: ${err}`);
+        }
     }
 }

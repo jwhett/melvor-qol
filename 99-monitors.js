@@ -13,3 +13,10 @@ watchers.Save = new Watcher(saveAndDownload, 1600000, "Game Saving")
 watchers.Burnt = new Watcher(sellAllOfNameSubstring, 5000, "Burnt Food", "Burnt")
 watchers.Feathers = new Watcher(sellAllOfNameSubstring, 5000, "Feathers", "Feathers")
 // for (watcher in watchers) {watchers[watcher].start()}
+
+function showWatchers() {
+    console.log(`Status as of ${new Date()}:`)
+    for (w in watchers) {
+        console.log(` => ${watchers[w].type} running for ${watchers[w].duration()} seconds.`)
+    }
+}
