@@ -6,7 +6,7 @@ function Watcher(fn, interval, type, ...args) {
 }
 
 Watcher.prototype.start = function () {
-    if (this.intervalID == null) return // either null or undefined
+    if (this.intervalID != null) return // either null or undefined
     this.intervalID = setInterval(this.fn, this.interval, ...this.args)
     this.startTime = new Date().getTime()
 };
