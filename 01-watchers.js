@@ -6,15 +6,15 @@ function Watcher(fn, interval, type, ...args) {
 }
 
 Watcher.prototype.start = function () {
-    if (this.intervalID !== undefined) return
+    if (this.intervalID == null) return // either null or undefined
     this.intervalID = setInterval(this.fn, this.interval, ...this.args)
     this.startTime = new Date().getTime()
 };
 
 Watcher.prototype.stop = function () {
-    if (this.intervalID === undefined) return
+    if (this.intervalID == null) return // either null or undefined
     clearInterval(this.intervalID)
-    this.intervalID = undefined
+    this.intervalID = null
            `Ran for ${this.duration()} seconds`)
 };
 
