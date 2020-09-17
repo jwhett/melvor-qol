@@ -30,7 +30,6 @@ function reapAndSow() {
     for (let locationID=0; locationID < newFarmingAreas.length; locationID++) {
         for (let patchID=0; patchID < newFarmingAreas[locationID].patches.length; patchID++) {
             let patch = newFarmingAreas[locationID].patches[patchID]
-            let areaName = newFarmingAreas[locationID].areaName.substring(0,newFarmingAreas[locationID].areaName.length-1)
             selectedPatch = [newFarmingAreas[locationID].id, patchID] // Melvor global
             selectedSeed = 0 // Melvor global; seed 0 is empty
 
@@ -41,15 +40,15 @@ function reapAndSow() {
             // what seed do i plant?
             if (patchIsEmpty(patch)) {
             // no harvest in this block
-                selectedSeed = getNextSeedIDByTier(areaName)
+                selectedSeed = getNextSeedIDByTier(newFarmingAreas[locationID].areaName)
             } else {
                 // try to plant the same seed
                 // we'll need to harvest before leaving block
                 if (checkBankForItem(patch.seedID)) {
                     selectedSeed = patch.seedID
                 } else {
-                  // don't have the same seed to plant
-                  selectedSeed = getNextSeedIDByTier(areaName)
+                    // don't have the same seed to plant
+                    selectedSeed = getNextSeedIDByTier(newFarmingAreas[locationID].areaName)
                 }
                 try {
                     harvestSeed(locationID, patchID)
@@ -57,7 +56,9 @@ function reapAndSow() {
                     console.error(`oops! hit an issue harvesting: ${err}`);
                 }
             }
-            if (selectedSeed === undefined) return // don't have a seed to plant
+            if (selectedSeed === undefined) {
+                return // don't have a seed to plant
+            }
             try {
                 plantSeed()
             } catch (err) {
