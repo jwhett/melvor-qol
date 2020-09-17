@@ -23,16 +23,17 @@ function getNextSeedIDByTier(t) {
         } else {
             loc = CONSTANTS.item[cname]
         }
-        if (loc !== undefined && checkBankForItem(loc)) break
+        if (loc !== undefined && checkBankForItem(loc)) {
+            return loc
+        }
     }
-    return loc
 }
 // Main
 function reapAndSow() {
     for (let locationID=0; locationID < newFarmingAreas.length; locationID++) {
         for (let patchID=0; patchID < newFarmingAreas[locationID].patches.length; patchID++) {
             let patch = newFarmingAreas[locationID].patches[patchID]
-            let areaName = newFarmingAreas[locationID].areaName
+            let areaName = newFarmingAreas[locationID].areaName.substring(0,newFarmingAreas[locationID].areaName.length-1)
             selectedPatch = [newFarmingAreas[locationID].id, patchID] // Melvor global
             selectedSeed = 0 // Melvor global
 
