@@ -1,4 +1,3 @@
-// Helpers
 function getSeeds() {
     return items.filter(item => item.type === "Seeds")
 }
@@ -11,31 +10,29 @@ function patchIsEmpty(p) {
 function patchIsReady(p) {
     return ((patchHasGrown(p)) || (patchIsEmpty(p)))
 }
-function getNextSeedIDByTier(t) {
-    let loc
-    let seedsOfTier = items.filter(item => item.tier === t)
-    for (var i=0; i<seedsOfTier.length; i++){
-        let seed = seedsOfTier[i]
-        let cname = seed.name.substring(0,seed.name.length-1).replaceAll(' ', '_')
-        if (CONSTANTS.item[cname] === undefined) {
-            // Carrot_Seeds: the only exception to this rule
-            loc = CONSTANTS.item[cname+"s"]
-        } else {
-            loc = CONSTANTS.item[cname]
-        }
-        if (loc !== undefined && checkBankForItem(loc)) {
-            return loc
-        }
+
+function getConstantIDByName(n) {
+    let cname = n.replaceAll(' ','_').substring(0,n.length-1)
+    if (CONSTANTS.item[cname] === undefined) {
+        return CONSTANTS.item[cname+"s"]
     }
+    return CONSTANTS.item[cname]
 }
-// Main
+
+function getNextSeedIDByTier(t) {
+    for (s of allOfTypeInBank('Seeds').sort((a,b) => {return b.qty - a.qty})) {
+        if (items[getConstantIDByName(s.name)].tier === t.substring(0,t.length-1)) return getConstantIDByName(s.name)
+    }
+    return undefined
+}
+
 function reapAndSow() {
     for (let locationID=0; locationID < newFarmingAreas.length; locationID++) {
         for (let patchID=0; patchID < newFarmingAreas[locationID].patches.length; patchID++) {
             let patch = newFarmingAreas[locationID].patches[patchID]
             let areaName = newFarmingAreas[locationID].areaName.substring(0,newFarmingAreas[locationID].areaName.length-1)
             selectedPatch = [newFarmingAreas[locationID].id, patchID] // Melvor global
-            selectedSeed = 0 // Melvor global
+            selectedSeed = 0 // Melvor global; seed 0 is empty
 
             // can we plant?
             if (!patch.unlocked) continue
@@ -60,6 +57,7 @@ function reapAndSow() {
                     console.error(`oops! hit an issue harvesting: ${err}`);
                 }
             }
+            if (selectedSeed === undefined) return // don't have a seed to plant
             try {
                 plantSeed()
             } catch (err) {

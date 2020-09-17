@@ -17,6 +17,10 @@ function allOfTypeInBank(t) {
     return bank.filter(i => (i.type === t && !i.locked))
 }
 
+function itemInBank(id) {
+    return bank.filter(i => i.id === id).pop()
+}
+
 function sellAllOfType(t) {
     let things = allOfTypeInBank(t)
     things.forEach(thing => {
