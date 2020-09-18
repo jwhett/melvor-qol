@@ -20,7 +20,7 @@ function showWatchers() {
         if (watchers[w].duration() > 0) {
             console.log(` => [ RUNNING ] ${watchers[w].type} running for ${watchers[w].duration()} seconds.`)
         } else {
-            console.log(` => [ OFFLINE ] ${watchers[w].type} is not running`)
+            console.log(` => [ OFFLINE ] ${watchers[w].type}`)
         }
     }
 }
