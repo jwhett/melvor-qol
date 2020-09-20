@@ -1,0 +1,25 @@
+{
+  "name": "melvor-qol",
+  "version": "1.0.0",
+  "description": "melvor quality of life improvements",
+  "main": "99-monitors.js",
+  "dependencies": {},
+  "devDependencies": {
+    "eslint": "^7.9.0",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jwhett/melvor-qol.git"
+  },
+  "author": "Josh Whetton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jwhett/melvor-qol/issues"
+  },
+  "homepage": "https://github.com/jwhett/melvor-qol#readme"
+}
