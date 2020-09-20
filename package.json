@@ -13,7 +13,8 @@
     "eslint-plugin-promise": "^4.2.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "npx eslint *.js",
+    "layout": "npx eslint *.js --fix-type layout --fix"
   },
   "repository": {
     "type": "git",

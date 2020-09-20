@@ -1,4 +1,4 @@
 function saveAndDownload() {
-    downloadSave() // download locally
-    forceSync() // save to the cloud
+    downloadSave(); // download locally
+    forceSync(); // save to the cloud
 }

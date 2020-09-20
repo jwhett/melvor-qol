@@ -1,8 +1,8 @@
 function fireWatcher() {
-    if (!isCooking || cookingFireActive) return
+    if (!isCooking || cookingFireActive) return;
     try {
-        lightCookingFire()
+        lightCookingFire();
     } catch (err) {
-        console.error("oops! couldn't start a cooking fire: "+err);
+        console.error("oops! couldn't start a cooking fire: " + err);
     }
 }
