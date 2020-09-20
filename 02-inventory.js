@@ -1,3 +1,4 @@
+/* eslint-disable no-undef, no-console, max-len, no-plusplus, no-unused-vars */
 function MyFood(id, name, qty) {
      this.id = id;
      this.name = name;
@@ -22,7 +23,7 @@ function itemInBank(id) {
 }
 
 function sellAllOfType(t) {
-    let things = allOfTypeInBank(t);
+    const things = allOfTypeInBank(t);
     things.forEach((thing) => {
         try {
             sellItem(thing.id);
@@ -33,7 +34,7 @@ function sellAllOfType(t) {
 }
 
 function sellAllOfNameSubstring(s) {
-    let things = bank.filter((i) => i.name.includes(s));
+    const things = bank.filter((i) => i.name.includes(s));
     things.forEach((thing) => {
         try {
             sellItem(thing.id);
@@ -44,7 +45,7 @@ function sellAllOfNameSubstring(s) {
 }
 
 function learnTokens() {
-    let tokens = allOfTypeInBank('Token');
+    const tokens = allOfTypeInBank('Token');
     tokens.forEach((token) => {
         for (let i = 0; i < token.qty; i++) {
             try {
@@ -57,7 +58,7 @@ function learnTokens() {
 }
 
 function buryBones() {
-    let bones = allOfTypeInBank('Bones');
+    const bones = allOfTypeInBank('Bones');
     bones.forEach((bone) => {
         if (bone.qty >= 10) {
             cname = bone.name.replaceAll(' ', '_');
@@ -71,7 +72,7 @@ function buryBones() {
 }
 
 function haveMaterialsForCrafting(item) {
-    let required = [];
+    const required = [];
     let haveAllRequired;
     item.craftReq.forEach((req) => {
         required.push(checkBankForItem(req.id));
@@ -81,12 +82,14 @@ function haveMaterialsForCrafting(item) {
     } else {
         haveAllRequired = true;
     }
+    /* eslint-disable object-shorthand */
     return { haveAllRequired: haveAllRequired, forItem: item };
+    /* eslint-enable object-shorthand */
 }
 
 function findFood() {
-    let foodList = [];
-    let allFoodItems = allOfTypeInBank('Food');
+    const foodList = [];
+    const allFoodItems = allOfTypeInBank('Food');
     allFoodItems.forEach((food) => {
         foodList.push(new MyFood(food.id, food.name, food.qty));
     });
@@ -100,7 +103,7 @@ function isOutOfEquippedFood() {
 function getEquippedFoodCount() { return equippedFood[currentCombatFood].qty; }
 
 function equipNextFood() {
-    for (var i = 0; i < equippedFood.length; i++) {
+    for (let i = 0; i < equippedFood.length; i++) {
         try {
             if (equippedFood[i].qty > 0) {
                 selectEquippedFood(i);
@@ -116,7 +119,7 @@ function equipNextFood() {
 function foodTracker() {
     if (!isInCombat) return; // we're not in combat, don't need to watch food
     if (getEquippedFoodCount() > 0) return; // we have equipped food to eat
-    let foodList = findFood();
+    const foodList = findFood();
     if (isOutOfEquippedFood() && foodList.length === 0) { // completely out of food
         try {
             stopCombat(false, true, true); // death, stopDungeon, runAway
@@ -125,9 +128,11 @@ function foodTracker() {
             console.error(`oops! hit an error when stopping combat: ${err}`);
         }
     } else if (equipNextFood()) { // we have food in pocket, but need to equip it
+        /* eslint-disable no-useless-return */
         return; // We successfully swapped to equipped food
+        /* eslint-enable no-useless-return */
     } else {
-        let f = foodList.pop();
+        const f = foodList.pop();
         try {
             equipFood(currentBank, f.id, f.qty);
         } catch (err) {
