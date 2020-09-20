@@ -6,6 +6,7 @@ for (t of ['Junk', 'Gem', 'Havest', 'Logs']) {
 watchers.Bones = new Watcher(buryBones, 15000, 'Bury bones');
 watchers.Sort = new Watcher(sortBank, 60000, "Bank Sorting");
 watchers.Looting = new Watcher(lootAll, 15000, 'Auto-looting');
+watchers.Bonfire = new Watcher(lightBonfire, 1000, "XP Bonfire");
 watchers.Token = new Watcher(learnTokens, 15000, 'Learn tokens');
 watchers.Farming = new Watcher(reapAndSow, 60000, 'Auto-farming');
 watchers.Fire = new Watcher(lightCookingFire, 250, 'Cooking fire');
