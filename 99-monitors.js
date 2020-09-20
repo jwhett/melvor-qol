@@ -1,4 +1,5 @@
-var watchers = {};
+/* eslint-disable no-undef, no-restricted-syntax, no-unused-vars, no-console */
+const watchers = {};
 for (t of ['Junk', 'Gem', 'Havest', 'Logs']) {
     watchers[t] = new Watcher(sellAllOfType, 120000, t, t);
 }
