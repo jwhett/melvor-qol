@@ -35,6 +35,14 @@ const PrayerMap = {
     'melee': 17
 }
 
+function noPrayers() {
+    for (var i=0; i<activePrayer.length; i++) {
+        if (activePrayer[i]) {
+            togglePrayer(i)
+        }
+    }
+}
+
 function avoidBoss() {
     if (!isInCombat) return; // no need to check if out of combat
     let avoid

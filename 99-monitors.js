@@ -29,9 +29,9 @@ function showWatchers() {
     console.log(`Status as of ${new Date()}:`);
     for (w in watchers) {
         if (watchers[w].duration() > 0) {
-            console.log(`%c => [ RUNNING ] ${watchers[w].type} running for ${watchers[w].duration()} seconds.`, "background-color: green;"+baseStyles);
+            console.log(`%c${watchers[w].type} running for ${watchers[w].duration()} seconds.`, "background-color: green;"+baseStyles);
         } else {
-            console.log(`%c => [ OFFLINE ] ${watchers[w].type}`, "background-color: grey;"+baseStyles);
+            console.log(`%c${watchers[w].type}`, "background-color: grey;"+baseStyles);
         }
     }
 }
