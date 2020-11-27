@@ -21,3 +21,41 @@ function combatAutoEat(healWhenMissing = null) {
         stopCombat();
     }
 }
+
+function getCurrentEnemy() {
+    if (!isInCombat) return;
+    return MONSTERS[enemyInCombat];
+}
+
+const AttackTypes = [ 'melee', 'range', 'magic' ]
+
+const PrayerMap = {
+    'magic': 15,
+    'range': 16,
+    'melee': 17
+}
+
+function avoidBoss() {
+    if (!isInCombat) return; // no need to check if out of combat
+    let avoid
+    let togg = false; // initial toggle state
+    try {
+        avoid = PrayerMap[AttackTypes[getCurrentEnemy().attackType]]
+    } catch(err) {
+        return // try again later
+    }
+    try {
+        if (getCurrentEnemy().isBoss) {
+            if (!activePrayer[avoid]) {
+                togg = true;
+            }
+        } else if (activePrayer[avoid]) {
+            togg = true;
+        }
+    } catch(err) {
+        return // try again later
+    }
+    if (togg) {
+        togglePrayer(avoid);
+    }
+}

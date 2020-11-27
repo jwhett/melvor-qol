@@ -10,9 +10,10 @@ watchers.Bonfire = new Watcher(lightBonfire, 1000, "XP Bonfire");
 watchers.Token = new Watcher(learnTokens, 15000, 'Learn tokens');
 watchers.Farming = new Watcher(reapAndSow, 60000, 'Auto-farming');
 watchers.Fire = new Watcher(lightCookingFire, 250, 'Cooking fire');
-watchers.Eating = new Watcher(combatAutoEat, 1500, 'Combat eating');
 watchers.Food = new Watcher(foodTracker, 10000, 'Combat food swap');
 watchers.Save = new Watcher(saveAndDownload, 1600000, 'Game saving');
+watchers.AvoidBoss = new Watcher(avoidBoss, 1000, 'Avoid Boss Damage');
+watchers.Eating = new Watcher(combatAutoEat, 100, 'Combat eating', 150);
 watchers.Burnt = new Watcher(sellAllOfNameSubstring, 5000, 'Burnt food seller', 'Burnt');
 watchers.Feathers = new Watcher(sellAllOfNameSubstring, 5000, 'Feather seller', 'Feathers');
 // for (watcher in watchers) {watchers[watcher].start()}
@@ -21,9 +22,9 @@ function showWatchers() {
     console.log(`Status as of ${new Date()}:`);
     for (w in watchers) {
         if (watchers[w].duration() > 0) {
-            console.log(` => [ RUNNING ] ${watchers[w].type} running for ${watchers[w].duration()} seconds.`);
+            console.log(`%c => [ RUNNING ] ${watchers[w].type} running for ${watchers[w].duration()} seconds.`, "color: green");
         } else {
-            console.log(` => [ OFFLINE ] ${watchers[w].type}`);
+            console.log(`%c => [ OFFLINE ] ${watchers[w].type}`, "color: red");
         }
     }
 }
