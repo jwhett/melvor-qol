@@ -44,26 +44,26 @@ function noPrayers() {
 }
 
 function avoidBoss() {
-    if (!isInCombat) return; // no need to check if out of combat
+    if (!isInCombat) {
+        return; // no need to check if out of combat
+    }
     let avoid
-    let togg = false; // initial toggle state
     try {
         avoid = PrayerMap[AttackTypes[getCurrentEnemy().attackType]]
     } catch(err) {
         return // try again later
     }
-    try {
-        if (getCurrentEnemy().isBoss) {
-            if (!activePrayer[avoid]) {
-                togg = true;
-            }
-        } else if (activePrayer[avoid]) {
-            togg = true;
+    if (getCurrentEnemy().isBoss) {
+        // Fighting a boss, turn on avoidance prayer
+        if (!activePrayer[avoid]) {
+            togglePrayer(avoid);
         }
-    } catch(err) {
-        return // try again later
-    }
-    if (togg) {
-        togglePrayer(avoid);
+    } else {
+        // Not fighting a boss, clear the avoidance prayers
+        for (let p in PrayerMap) {
+            if (activePrayer[PrayerMap[p]]) {
+                togglePrayer(PrayerMap[p]);
+            }
+        }
     }
 }
