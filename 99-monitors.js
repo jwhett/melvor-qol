@@ -10,6 +10,7 @@ watchers.Bonfire = new Watcher(lightBonfire, 1000, "XP Bonfire");
 watchers.Token = new Watcher(learnTokens, 15000, 'Learn tokens');
 watchers.Farming = new Watcher(reapAndSow, 60000, 'Auto-farming');
 watchers.Fire = new Watcher(lightCookingFire, 250, 'Cooking fire');
+watchers.Slayer = new Watcher(slayerWatcher, 60000, 'Slayer tasks');
 watchers.Food = new Watcher(foodTracker, 10000, 'Combat food swap');
 watchers.Save = new Watcher(saveAndDownload, 1600000, 'Game saving');
 watchers.AvoidBoss = new Watcher(avoidBoss, 1000, 'Avoid Boss Damage');
