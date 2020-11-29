@@ -67,3 +67,20 @@ function avoidBoss() {
         }
     }
 }
+
+function slayerWatcher() {
+    let slayerTarget
+    try {
+        slayerTarget = slayerTask[0].monsterID;
+    } catch(err) {
+        return; // probably between enemy spawns
+    }
+    if (getCurrentEnemy().id === slayerTarget) return; // same task
+    try {
+        jumpToEnemy(slayerTarget); // new enemy
+    } catch(err) {
+        // couldn't jump to next slayer target
+        newSlayerTask(); // get new task
+        slayerWatcher(); // evaluate current situation
+    }
+}
