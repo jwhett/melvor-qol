@@ -19,7 +19,7 @@ watchers.Burnt = new Watcher(sellAllOfNameSubstring, 5000, 'Burnt food seller', 
 watchers.Feathers = new Watcher(sellAllOfNameSubstring, 5000, 'Feather seller', 'Feathers');
 // for (watcher in watchers) {watchers[watcher].start()}
 
-let baseStyles = [
+let loggingStyles = [
         "color: white",
         "padding: 2px 4px",
         "border-radius: 2px",
@@ -30,9 +30,9 @@ function showWatchers() {
     console.log(`Status as of ${new Date()}:`);
     for (w in watchers) {
         if (watchers[w].duration() > 0) {
-            console.log(`%c${watchers[w].type} running for ${watchers[w].duration()} seconds.`, "background-color: green;"+baseStyles);
+            console.log(`%c${watchers[w].type} running for ${watchers[w].duration()} seconds.`, "background-color: green;"+loggingStyles);
         } else {
-            console.log(`%c${watchers[w].type}`, "background-color: grey;"+baseStyles);
+            console.log(`%c${watchers[w].type}`, "background-color: grey;"+loggingStyles);
         }
     }
 }
