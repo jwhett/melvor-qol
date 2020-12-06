@@ -15,8 +15,9 @@ Watcher.prototype.start = function () {
 Watcher.prototype.stop = function () {
     if (this.intervalID == null) return; // either null or undefined
     clearInterval(this.intervalID);
-    this.intervalID = null;
     console.log(`Ran for ${this.duration()} seconds`);
+    this.intervalID = null;
+    this.startTime = null;
 };
 
 Watcher.prototype.restart = function () {
@@ -25,11 +26,6 @@ Watcher.prototype.restart = function () {
 };
 
 Watcher.prototype.duration = function () {
-    const d = Math.floor((new Date().getTime() - this.startTime) / 1000);
-    /* eslint-disable no-restricted-globals */
-    if (isNaN(d)) {
-        return 0;
-    }
-    return d;
-    /* eslint-enable no-restricted-globals */
+    if (this.startTime == null) return;
+    return Math.floor((new Date().getTime() - this.startTime) / 1000);
 };
